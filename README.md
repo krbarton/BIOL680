@@ -7,4 +7,4 @@ Matt (mvdm) is here -- 2013-08-30
 Matt (mattmizumi) is here -- 2013-08-30 (test account)  
 Eric (ecarmichael) is here -- 2013-09-10  
 Sherif (smsolima) is here -- 2013-09-12  
-
+Jimmie (jgmaz) is here -- 2013-09-16
