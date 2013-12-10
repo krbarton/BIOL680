@@ -1,11 +1,24 @@
 function events = detectSWR(csc,varargin)
+%--------------------------------------------------------------------------
+%detectSWT(csc, varargin)
+%
+%Warning: extremely processor intensive on large samples!
+%
+%Inputs:
+%   CSC: [1 x 1] TSD containing an LFP signal
+%
+%Optional:
+%   ripple_band: [2 x 1] low and high for filter (default: [140 180])
+%   threshold: z-score threshold for signal detection (default: 5)
+%   restrict_range: [2 x 1]  time window (default: [6000 6025])
+%   Fs: integer indicating sampling frequency (default: 2000)
+%
+%--------------------------------------------------------------------------
 
 ripple_band = [140 180];
 threshold = 5;
-%%Added to make manageable. Large windows seem to kill the CPU. You have been
-%%warned!
 restrict_range = [6000 6025]; 
-Fs = 2000;
+Fs = 2000; % Could have been taken from header, but this was not implemented due to ease of testing
 extract_varargin;
 
 csc_active = Restrict(csc, restrict_range(1), restrict_range(2));
@@ -24,7 +37,8 @@ mean_signal = nanmean(filtered_SWR);
 sd_signal = nanstd(filtered_SWR);
 zScores = (filtered_SWR-mean_signal)/sd_signal; 
 
-%%Hacky centering of z-scores. My brain isn't working right now.
+%%Start filtering signal for SWR detection
+%A little hacky, but centers on the mean of the SWR
 startT = 0;cnt = 0;
 times = [];powers=[];
 for ii = 1:length(zScores)
